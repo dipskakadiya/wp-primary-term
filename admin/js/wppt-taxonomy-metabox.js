@@ -5,10 +5,20 @@
     var primaryTermInputTemplate, primaryTermElementTemplate, primaryTermRenderTemplate;
     var taxonomies = WordPressPrimaryCategory.taxonomies;
 
+    /* Allow to check `Make Primary` button element exist or not for term
+     *
+     * @since 1.0
+     * @return bool
+     */
     function isPrimaryTermElement( termItem ) {
         return 1 === termItem.children( ".easy-make-primary-term" ).length;
     }
 
+    /* Crete `Make Primary` button for term
+     *
+     * @since 1.0
+     * @return void
+     */
     function createPrimaryTermElement( term, taxonomy  ) {
         var termLabel, htmlPrimaryEle;
 
@@ -19,6 +29,11 @@
         termLabel.after( htmlPrimaryEle );
     }
 
+    /* Get primary term id which set in primary term input
+     *
+     * @since 1.0
+     * @return int|null
+     */
     function getPrimaryTerm( taxonomyName ) {
         var primaryTermInput;
 
@@ -26,6 +41,13 @@
         return primaryTermInput.val();
     }
 
+    /* Allow to add status of primary term for all selected terms
+     * Primary term element only visible if more then one term selected.
+     * If single term selected and by default selected term is primary term.
+     *
+     * @since 1.0
+     * @return void
+     */
     function updatePrimaryTerm( taxonomy ) {
         var taxonomyName, selectedTerms, termsListItems, termItem, termLabel, htmlPrimaryRender;
         taxonomyName = taxonomy.name;
@@ -59,9 +81,14 @@
                 }
             }
         } );
-
     }
 
+    /* Allow to handle term checked/uncheck event.
+     * Set First term as default primary term if primary term not set on this event
+     *
+     * @since 1.0
+     * @return void
+     */
     function termselectionChange( taxonomy ) {
         return function ( e ) {
 
@@ -73,6 +100,11 @@
         };
     }
 
+    /* Handle listitem add event to add Primary term button for selected term
+     *
+     * @since 1.0
+     * @return void
+     */
     function newTermAdded( taxonomy ) {
         return function ( e ) {
             defaultPrimaryTerm( taxonomy );
@@ -80,12 +112,20 @@
         };
     }
 
+    /* Allow to set given termID as value of primary term input.
+     * @since 1.0
+     * @return void
+     */
     function setPrimaryTerm( termId, taxonomy ) {
         var primaryTermInput;
         primaryTermInput = $( "#wppt-primary-" + taxonomy.name );
         primaryTermInput.val( termId ).trigger( "change" );
     }
 
+    /* Handle `Make Primary` button click event amd set relative term as primary term.
+     * @since 1.0
+     * @return function
+     */
     function makePrimaryTerm( taxonomy ) {
         return function ( e ) {
             var btnPrimaryTerm, termInput;
@@ -96,17 +136,34 @@
         };
     }
 
+    /* Set First term as primary term
+     *
+     * @since 1.0
+     * @return void
+     */
     function makeFirstTermPrimary( taxonomy ) {
         var firstTerm = $( "#" + taxonomy.name + 'checklist input[type="checkbox"]:checked:first' );
         setPrimaryTerm( firstTerm.val(), taxonomy );
     }
 
+    /* Set First term as default primary term if primary term is not check
+     *
+     * @since 1.0
+     * @return void
+     */
     function defaultPrimaryTerm( taxonomy ) {
         if ( "" === getPrimaryTerm( taxonomy.name ) ) {
             makeFirstTermPrimary( taxonomy );
         }
     }
 
+    /* init primary term input on taxonomy metabox.
+     * Added event hook on list update and list item checked/unchecked
+     * Add Event action to make term as primary term and update primary term input value.
+     *
+     * @since 1.0
+     * @return void
+     */
     function initWPPrimaryCategory ( taxonomy ) {
         var taxonomyMetabox, htmlInput;
         taxonomyMetabox = $(  "#" + taxonomy.name + "div");
