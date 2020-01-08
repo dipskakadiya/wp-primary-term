@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             sprintf(
             /* translators: %s is the taxonomy title. This will be shown to screenreaders */
                 '' . __( 'Primary %s', 'wp-primary-term' ) . '',
-                '{{data.taxonomy.name}}'
+                '{{data.taxonomy.title}}'
             )
         );
     ?></span>
