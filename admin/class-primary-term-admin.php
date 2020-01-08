@@ -68,6 +68,20 @@ if ( ! class_exists( 'Primary_Category_Admin' ) ) {
             if ( ! $this->is_post_edit() && ! $this->is_post_add() ) {
                 return;
             }
+
+            wp_register_script( 'wppt-taxonomy-metabox', WPPT_URL . 'admin/js/wppt-taxonomy-metabox.js', array( 'jquery' ), time(), true );
+            wp_enqueue_script( 'wppt-taxonomy-metabox' );
+
+            $data       = array(
+                'taxonomies' => array(
+                    array(
+                        'title'=> 'Category',
+                        'name'=> 'category',
+                        'primary'=> '1',
+                    )
+                )
+            );
+            wp_localize_script( 'wppt-taxonomy-metabox', 'WordPressPrimaryCategory', $data );
         }
 
         /**
@@ -81,6 +95,13 @@ if ( ! class_exists( 'Primary_Category_Admin' ) ) {
             if ( ! $this->is_post_edit() && ! $this->is_post_add() ) {
                 return;
             }
+
+            /**
+             * Include template for input for primary category
+             */
+            include_once WPPT_PATH . 'admin/templates/templates-primary-term-input.php';
+            include_once WPPT_PATH . 'admin/templates/templates-primary-term-element.php';
+            include_once WPPT_PATH . 'admin/templates/templates-primary-term-render.php';
         }
 
         /**
