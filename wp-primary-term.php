@@ -37,6 +37,8 @@ if ( ! defined( 'WPPT_URL' ) ) {
 }
 
 
+require_once WPPT_PATH . 'includes/class-primary-term-public.php';
+
 /**
  * Load the admin class if its the admin dashboard
  */

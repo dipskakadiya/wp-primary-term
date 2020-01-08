@@ -28,9 +28,7 @@ if ( ! class_exists( 'Primary_Category_Admin' ) ) {
          * Class function to register hook for admin setup
          * @since 1.0
          */
-        public function __construct(){
-            $this->register_hooks();
-        }
+        public function __construct(){}
 
         /**
          * Return the current static instant of this class
@@ -42,6 +40,7 @@ if ( ! class_exists( 'Primary_Category_Admin' ) ) {
             // If the single instance hasn't been set, set it now.
             if ( null === self::$instance ) {
                 self::$instance = new self();
+                self::$instance->register_hooks();
             }
 
             return self::$instance;
@@ -55,13 +54,15 @@ if ( ! class_exists( 'Primary_Category_Admin' ) ) {
         public function register_hooks() {
             add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
             add_action( 'admin_footer', array( $this, 'admin_footer' ), 10 );
+            add_action( 'save_post', array( $this, 'save_primary_terms' ) );
         }
 
         /**
          * Enqueue all the js assets which requited for primary category admin setup.
+         *
+         * @since 1.0
          */
         public function enqueue_scripts() {
-
             /**
              * return if screen is not post edit or new post screen
              */
@@ -77,7 +78,7 @@ if ( ! class_exists( 'Primary_Category_Admin' ) ) {
                     array(
                         'title'=> 'Category',
                         'name'=> 'category',
-                        'primary'=> '1',
+                        'primary'=> get_primary_term_id( '','category' ),
                     )
                 )
             );
@@ -102,6 +103,43 @@ if ( ! class_exists( 'Primary_Category_Admin' ) ) {
             include_once WPPT_PATH . 'admin/templates/templates-primary-term-input.php';
             include_once WPPT_PATH . 'admin/templates/templates-primary-term-element.php';
             include_once WPPT_PATH . 'admin/templates/templates-primary-term-render.php';
+        }
+
+        /**
+         * Allow to store selected primary term
+         *
+         * @param $post_id  post id for store primary term
+         * @since 1.0
+         */
+        public function save_primary_terms( $post_id ) {
+
+            $taxonomies = array(
+                array(
+                    'name' => 'category'
+                )
+            );
+
+            foreach ( $taxonomies as $taxonomy ) {
+                $this->save_primary_term( $post_id, $taxonomy );
+            }
+        }
+
+        /**
+         * Allow to store selected term as primary term of particular taxonomy.
+         *
+         * @param $post_id  post id for store primary term
+         * @param $taxonomy  taxonomy
+         * @since 1.0
+         */
+        protected function save_primary_term( $post_id, $taxonomy ){
+            $taxonomy_name = $taxonomy['name'];
+            $primary_term = filter_input( INPUT_POST, 'wppt_primary_' . $taxonomy_name . '_term', FILTER_SANITIZE_NUMBER_INT );
+
+            // We accept an empty string here because we need to save that if no terms are selected.
+            if ( null !== $primary_term && check_admin_referer( 'save-primary-term', 'wppt_primary_' . $taxonomy_name . '_nonce' ) ) {
+                $primary_term_object = new Primary_Term( $post_id, $taxonomy_name );
+                $primary_term_object->save_primary_term( $primary_term );
+            }
         }
 
         /**
