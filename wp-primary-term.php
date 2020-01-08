@@ -35,3 +35,11 @@ if ( ! defined( 'WPPT_URL' ) ) {
      */
     define( 'WPPT_URL', trailingslashit( plugins_url( '', __FILE__ ) ) );
 }
+
+
+/**
+ * Load the admin class if its the admin dashboard
+ */
+if ( is_admin() ) {
+    require_once WPPT_PATH . 'admin/class-primary-term-admin.php';
+}
