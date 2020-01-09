@@ -5,7 +5,7 @@ Plugin Name: Wp Primary Term
 Plugin URI: https://profiles.wordpress.org/dipeshkakadiya/
 Description: This plugin allow you to set primary term for posts & custom post type.
 Version: 1.0
-Author: dipesh<dipesh.kakadiya111@gmail.com>
+Author: dipesh.kakadiya<dipesh.kakadiya111@gmail.com>
 Author URI: https://profiles.wordpress.org/dipeshkakadiya/
 License: GPL2
 Text Domain: wordpress-primary-term

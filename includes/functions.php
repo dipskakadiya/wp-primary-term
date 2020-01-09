@@ -12,8 +12,8 @@ if ( ! function_exists( 'get_the_primary_term' ) ){
      *
      * @param string $taxonomy Taxonomy name.
      * @param int $id int|WP_Post|null $post   Optional. Post ID or post object. Defaults to global $post.
-     * @param string $before Optional. Before list.
-     * @param string $after Optional. After list.
+     * @param string $before Optional. Before link.
+     * @param string $after Optional. After link.
      * @return string|false|WP_Error A link of term on success, false if there are no terms, WP_Error on failure.
      */
     function get_the_primary_term( $taxonomy, $id=null, $before = '', $after = '' ){
