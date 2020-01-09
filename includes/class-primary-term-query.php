@@ -39,7 +39,7 @@ if ( ! class_exists( 'Primary_Term_Query' ) ) {
             $taxonomies = Primary_Term_Public::get_instance()->get_primary_taxonomies();
 
             foreach ( $taxonomies as $taxonomy ) {
-                if ( isset( $query_vars['primary_term_query'][ 'primary_' . $taxonomy['name'] ] ) ){
+                if ( isset( $query_vars['primary_term_query'][ $taxonomy['name'] ] ) ){
                     if ( empty( $query->query_vars['meta_query'] ) ){
                         $query->query_vars['meta_query'] = array(
                             'relation' => 'AND'
@@ -52,8 +52,8 @@ if ( ! class_exists( 'Primary_Term_Query' ) ) {
 
                     $query->query_vars['meta_query'][] = array(
                         'key'     => '_primary_' . $taxonomy['name'],
-                        'value'   => $query_vars['primary_term_query'][ 'primary_' . $taxonomy['name'] ]['value'],
-                        'compare' => $query_vars['primary_term_query'][ 'primary_' . $taxonomy['name'] ]['compare']
+                        'value'   => $query_vars['primary_term_query'][ $taxonomy['name'] ]['value'],
+                        'compare' => $query_vars['primary_term_query'][ $taxonomy['name'] ]['compare']
                     );
                 }
             }
