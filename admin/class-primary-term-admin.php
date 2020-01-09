@@ -73,6 +73,9 @@ if ( ! class_exists( 'Primary_Term_Admin' ) ) {
             wp_register_script( 'wppt-taxonomy-metabox', WPPT_URL . 'admin/js/wppt-taxonomy-metabox.js', array( 'jquery' ), time(), true );
             wp_enqueue_script( 'wppt-taxonomy-metabox' );
 
+            wp_register_style( 'wppt-taxonomy-metabox', WPPT_URL . 'admin/css/wppt-taxonomy-metabox.css', array(), time() );
+            wp_enqueue_style( 'wppt-taxonomy-metabox' );
+
             $taxonomies = Primary_Term_Public::get_instance()->get_primary_taxonomies();
             if ( ! empty( $taxonomies ) ){
                 foreach ( $taxonomies as $key => $taxonomy ){
