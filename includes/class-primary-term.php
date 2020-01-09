@@ -48,7 +48,14 @@ if ( ! class_exists( 'Primary_Term' ) ) {
          * @since 1.0
          */
         public function save_primary_term( $termId ){
+            $cache_key = 'primary_term_' . $this->taxonomy_name . '_' . $this->post_id;
+
             update_post_meta( $this->post_id, '_primary_' . $this->taxonomy_name, $termId );
+
+            /**
+             * Delete cache on primary term update.
+             */
+            wp_cache_delete( $cache_key, 'wp-primary-term' );
         }
 
         /**
@@ -58,11 +65,23 @@ if ( ! class_exists( 'Primary_Term' ) ) {
          * @return bool|int
          */
         public function get_primary_term_id(){
-            $primary_term_id = (int) get_post_meta( $this->post_id, '_primary_' . $this->taxonomy_name, true );
 
-            $post_terms_ids = $this->ger_post_terms_ids();
-            if ( ! in_array( $primary_term_id, $post_terms_ids ) ){
-                $primary_term_id = false;
+            $cache_key = 'primary_term_' . $this->taxonomy_name . '_' . $this->post_id;
+
+            $primary_term_id = wp_cache_get( $cache_key, 'wp-primary-term', 'wp-primary-term' );
+
+            if ( false === $primary_term_id ) {
+                $primary_term_id = (int)get_post_meta($this->post_id, '_primary_' . $this->taxonomy_name, true);
+
+                $post_terms_ids = $this->ger_post_terms_ids();
+                if (!in_array($primary_term_id, $post_terms_ids)) {
+                    $primary_term_id = false;
+                }
+
+                /**
+                 * Cache primary term id for a one day. Cache will be deleted on primary term data updated
+                 */
+                wp_cache_set( $cache_key, $primary_term_id, 'wp-primary-term', DAY_IN_SECONDS );
             }
             return $primary_term_id;
         }
