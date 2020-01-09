@@ -54,8 +54,8 @@
         selectedTerms = $( "#" + taxonomyName + 'checklist input[type="checkbox"]:checked' );
         termsListItems = $( "#" + taxonomyName + "checklist li" );
 
-        $( ".wppt-primary-term-button" ).remove();
-        $( "span.wppt-primary-term-render-label" ).remove();
+        $( "#" + taxonomyName + " .wppt-primary-term-button" ).remove();
+        $( "#" + taxonomyName + " span.wppt-primary-term-render-label" ).remove();
         termsListItems.removeClass( "wppt-primary-term" );
 
         // If there is only one term selected we don't needed primary term
