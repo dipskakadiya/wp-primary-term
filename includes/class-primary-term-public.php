@@ -98,7 +98,6 @@ if ( ! class_exists( 'Primary_Term_Public' ) ) {
          * setup all public hook and filter
          */
         protected function register_hooks() {
-            $this->c['primary_term_query'] = new Primary_Term_Query();
         }
 
         /**

@@ -23,8 +23,8 @@ This plugin only work with WordPress Classic Editor.
 
 if you want to filter post and custom post types based on their primary categories.
 
-In primary term query, filter item Key will be `taxonomy_slug`
-Ex For Category filter key will be `category`
+For primary term query, Meta key will be `_primary_<taxonomy>`
+Ex For Category filter key will be `_primary_category`
 ```
 /**
  * This snippet fetch 10 published posts which have category ID 5
@@ -34,9 +34,10 @@ $args = array(
     'post_type' => 'post',
     'post_status' => 'publish',
     'posts_per_page' => '10',
-    'primary_term_query' => array(
+    'meta_query' => array(
         'relation' => 'AND',
-        'category' => array(
+        'array(
+            'key' => '_primary_category',
             'value' => '5',
             'compare' => '='
         ),
@@ -52,9 +53,10 @@ $main_query = new WP_Query( $args );
      'post_type' => 'post',
      'post_status' => 'publish',
      'posts_per_page' => '10',
-     'primary_term_query' => array(
+     'meta_query' => array(
          'relation' => 'AND',
-         'category' => array(
+         array(
+             'key' => '_primary_category',
              'value' => '5,2',
              'compare' => 'IN'
          ),
