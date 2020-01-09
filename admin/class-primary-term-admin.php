@@ -87,6 +87,8 @@ if ( ! class_exists( 'Primary_Category_Admin' ) ) {
 
         /**
          * Load all primary terms template
+         *
+         * @since 1.0
          */
         public function admin_footer() {
 
@@ -144,6 +146,8 @@ if ( ! class_exists( 'Primary_Category_Admin' ) ) {
 
         /**
          * Checks if the current screen is post edit
+         *
+         * @since 1.0
          * @return bool
          */
         private function is_post_edit(){
@@ -153,6 +157,8 @@ if ( ! class_exists( 'Primary_Category_Admin' ) ) {
 
         /**
          * Checks if the current screen is new post
+         *
+         * @since 1.0
          * @return bool
          */
         private function is_post_add(){
