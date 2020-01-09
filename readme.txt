@@ -1,4 +1,4 @@
-=== WordPress Primary Term ===
+# WordPress Primary Term
 Contributors: dipesh.kakadiya
 Tags: term, primary
 Requires at least: 4.5
@@ -9,17 +9,17 @@ License: GPLv2
 
 Allows you to choose primary term for posts and custom post types.
 
-== Description ==
+## Description
 
 Allows you to choose primary taxonomy for posts and custom post types.
 This plugin only work with WordPress Classic Editor.
 
-== Installation ==
+## Installation
 1. Add the plugin's folder in the WordPress' plugin directory.
 2. Activate the plugin.
 3. Now you will have the ability to make any term a primary term for the post
 
-== Developers' Notes ==
+## Developers' Notes
 
 if you want to filter post and custom post types based on their primary categories.
 
@@ -66,9 +66,9 @@ $main_query = new WP_Query( $args );
 
 ```
 
-== Template functions ==
+## Template functions
 
-= Get a post Primary term link =
+### Get a post Primary term link
 
 `get_the_primary_term( $taxonomy, $id, $before, $after );`
 
@@ -77,21 +77,21 @@ $id       : Post ID or post object. Defaults to global $post. [ Optional ]
 $before   : Before link. [ Optional ]
 $after    : After link. [ Optional ]
 
-= Get a post Primary term object =
+### Get a post Primary term object
 
 `get_primary_term( $taxonomy, $id );`
 
 $taxonomy : Taxonomy name.
 $id       : Post ID or post object. Defaults to global $post. [ Optional ]
 
-= Get a post Primary term Id =
+### Get a post Primary term Id
 
 `get_primary_term_id( $taxonomy, $id );`
 
 $taxonomy : Taxonomy name.
 $id       : Post ID or post object. Defaults to global $post. [ Optional ]
 
-== Changelog ==
+## Changelog
 
-= 1.0 =
+### 1.0
 * Initial Development.
