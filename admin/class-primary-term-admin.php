@@ -5,21 +5,21 @@ if ( ! defined( 'ABSPATH' ) ) {
     die;
 }
 
-if ( ! class_exists( 'Primary_Category_Admin' ) ) {
+if ( ! class_exists( 'Primary_Term_Admin' ) ) {
 
     /**
-     * Class WP_Primary_Category
+     * Class Primary_Term_Admin
      * Main class for this plugin
      *
      * @since 1.0
      */
-    class Primary_Category_Admin {
+    class Primary_Term_Admin {
 
         /**
-         * The instance of the class Primary_Category_Admin
+         * The instance of the class Primary_Term_Admin
          *
          * @since 1.0
-         * @var Primary_Category_Admin
+         * @var Primary_Term_Admin
          */
         protected static $instance = null;
 
@@ -34,7 +34,7 @@ if ( ! class_exists( 'Primary_Category_Admin' ) ) {
          * Return the current static instant of this class
          *
          * @since 1.0
-         * @return Primary_Category_Admin
+         * @return Primary_Term_Admin
          */
         public static function get_instance(){
             // If the single instance hasn't been set, set it now.
@@ -73,14 +73,14 @@ if ( ! class_exists( 'Primary_Category_Admin' ) ) {
             wp_register_script( 'wppt-taxonomy-metabox', WPPT_URL . 'admin/js/wppt-taxonomy-metabox.js', array( 'jquery' ), time(), true );
             wp_enqueue_script( 'wppt-taxonomy-metabox' );
 
+            $taxonomies = Primary_Term_Public::get_instance()->get_primary_taxonomies();
+            if ( ! empty( $taxonomies ) ){
+                foreach ( $taxonomies as $key => $taxonomy ){
+                    $taxonomies[ $key ] ['primary'] = get_primary_term_id( $taxonomy['name'] );
+                }
+            }
             $data       = array(
-                'taxonomies' => array(
-                    array(
-                        'title'=> 'Category',
-                        'name'=> 'category',
-                        'primary'=> get_primary_term_id( 'category' ),
-                    )
-                )
+                'taxonomies' => $taxonomies
             );
             wp_localize_script( 'wppt-taxonomy-metabox', 'WordPressPrimaryCategory', $data );
         }
@@ -115,11 +115,7 @@ if ( ! class_exists( 'Primary_Category_Admin' ) ) {
          */
         public function save_primary_terms( $post_id ) {
 
-            $taxonomies = array(
-                array(
-                    'name' => 'category'
-                )
-            );
+            $taxonomies = Primary_Term_Public::get_instance()->get_primary_taxonomies();
 
             foreach ( $taxonomies as $taxonomy ) {
                 $this->save_primary_term( $post_id, $taxonomy );
@@ -167,5 +163,5 @@ if ( ! class_exists( 'Primary_Category_Admin' ) ) {
         }
     }
 
-    Primary_Category_Admin::get_instance();
+    Primary_Term_Admin::get_instance();
 }

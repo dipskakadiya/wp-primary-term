@@ -15,7 +15,7 @@ if ( ! class_exists( 'Primary_Term_Query' ) ) {
      */
     class Primary_Term_Query {
 
-        public function __construct( $post_id, $taxonomy_name ){
+        public function __construct(){
             $this->register_hooks();
 
         }
@@ -36,11 +36,9 @@ if ( ! class_exists( 'Primary_Term_Query' ) ) {
          */
         public function primary_term_query( $query ){
             $query_vars = $query->query_vars;
-            $taxonomies = array(
-                array(
-                    'name' => 'category'
-                )
-            );
+
+            $taxonomies = Primary_Term_Public::get_instance()->get_primary_taxonomies();
+
             foreach ( $taxonomies as $taxonomy ) {
                 if ( isset( $query_vars[ 'primary_' . $taxonomy['name'] ] ) ){
                     if ( empty( $query->query_vars['meta_query'] ) ){

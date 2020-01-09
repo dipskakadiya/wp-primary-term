@@ -100,6 +100,22 @@ if ( ! class_exists( 'Primary_Term_Public' ) ) {
         protected function register_hooks() {
             $this->c['primary_term_query'] = new Primary_Term_Query();
         }
+
+        /**
+         * Return taxonomies array for which primary term functionality enables
+         *
+         * @since 1.0
+         * @return array
+         */
+        public function get_primary_taxonomies(){
+            $taxonomies = array(
+                array(
+                    'title'=> 'Category',
+                    'name'=> 'category',
+                )
+            );
+            return apply_filters( "primary_term_taxonomies", $taxonomies );
+        }
     }
     Primary_Term_Public::get_instance();
 }
