@@ -78,7 +78,7 @@ if ( ! class_exists( 'Primary_Category_Admin' ) ) {
                     array(
                         'title'=> 'Category',
                         'name'=> 'category',
-                        'primary'=> get_primary_term_id( '','category' ),
+                        'primary'=> get_primary_term_id( 'category' ),
                     )
                 )
             );

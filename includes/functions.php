@@ -10,13 +10,13 @@ if ( ! function_exists( 'get_the_primary_term' ) ){
      *
      * @since 1.0
      *
-     * @param int $id Post ID.
      * @param string $taxonomy Taxonomy name.
+     * @param int $id int|WP_Post|null $post   Optional. Post ID or post object. Defaults to global $post.
      * @param string $before Optional. Before list.
      * @param string $after Optional. After list.
      * @return string|false|WP_Error A link of term on success, false if there are no terms, WP_Error on failure.
      */
-    function get_the_primary_term( $id, $taxonomy, $before = '', $after = '' ){
+    function get_the_primary_term( $taxonomy, $id=null, $before = '', $after = '' ){
         if ( ! $post = get_post( $id ) ) {
             return false;
         }
@@ -53,11 +53,11 @@ if ( ! function_exists( 'get_primary_term' ) ){
      *
      * @since 1.0
      *
-     * @param int $id Post ID.
      * @param string $taxonomy Taxonomy name.
+     * @param int $id int|WP_Post|null $post   Optional. Post ID or post object. Defaults to global $post.
      * @return string|false|WP_Error A object of term on success, false if there are no terms, WP_Error on failure.
      */
-    function get_primary_term( $id, $taxonomy ){
+    function get_primary_term( $taxonomy, $id = null ){
         if ( ! $post = get_post( $id ) ) {
             return false;
         }
@@ -88,11 +88,12 @@ if ( ! function_exists( 'get_primary_term_id' ) ){
      *
      * @since 1.0
      *
-     * @param int $id Post ID.
+
      * @param string $taxonomy Taxonomy name.
+     * @param int $id int|WP_Post|null $post   Optional. Post ID or post object. Defaults to global $post.
      * @return int|false|WP_Error A id of term on success, false if there are no terms, WP_Error on failure.
      */
-    function get_primary_term_id( $id, $taxonomy ){
+    function get_primary_term_id( $taxonomy, $id = null ){
         if ( ! $post = get_post( $id ) ) {
             return false;
         }
