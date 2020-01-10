@@ -72,27 +72,27 @@ $main_query = new WP_Query( $args );
 
 `wppt_get_the_primary_term( $taxonomy, $id, $before, $after );`
 
-$taxonomy : Taxonomy name.
-$id       : Post ID or post object. Defaults to global $post. [ Optional ]
-$before   : Before link. [ Optional ]
-$after    : After link. [ Optional ]
+$taxonomy : Taxonomy name.  
+$id       : Post ID or post object. Defaults to global $post [ Optional ] .   
+$before   : Before link [ Optional ].   
+$after    : After link [ Optional ].   
 
 ### Get a post Primary term object
 
 `wppt_get_primary_term( $taxonomy, $id );`
 
-$taxonomy : Taxonomy name.
-$id       : Post ID or post object. Defaults to global $post. [ Optional ]
+$taxonomy : Taxonomy name.  
+$id       : Post ID or post object. Defaults to global $post [ Optional ].  
 
 ### Get a post Primary term Id
 
 `wppt_get_primary_term_id( $taxonomy, $id );`
 
-$taxonomy : Taxonomy name.
-$id       : Post ID or post object. Defaults to global $post. [ Optional ]
+$taxonomy : Taxonomy name.  
+$id       : Post ID or post object. Defaults to global $post [ Optional ].   
 
 ### Get taxonomy array which are support primary term
-`wppt_get_primary_taxonomies(  );`
+`wppt_get_primary_taxonomies();`
 
 
 ## Changelog
