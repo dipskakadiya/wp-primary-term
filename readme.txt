@@ -70,7 +70,7 @@ $main_query = new WP_Query( $args );
 
 ### Get a post Primary term link
 
-`get_the_primary_term( $taxonomy, $id, $before, $after );`
+`wppt_get_the_primary_term( $taxonomy, $id, $before, $after );`
 
 $taxonomy : Taxonomy name.
 $id       : Post ID or post object. Defaults to global $post. [ Optional ]
@@ -79,17 +79,21 @@ $after    : After link. [ Optional ]
 
 ### Get a post Primary term object
 
-`get_primary_term( $taxonomy, $id );`
+`wppt_get_primary_term( $taxonomy, $id );`
 
 $taxonomy : Taxonomy name.
 $id       : Post ID or post object. Defaults to global $post. [ Optional ]
 
 ### Get a post Primary term Id
 
-`get_primary_term_id( $taxonomy, $id );`
+`wppt_get_primary_term_id( $taxonomy, $id );`
 
 $taxonomy : Taxonomy name.
 $id       : Post ID or post object. Defaults to global $post. [ Optional ]
+
+### Get taxonomy array which are support primary term
+`wppt_get_primary_taxonomies(  );`
+
 
 ## Changelog
 

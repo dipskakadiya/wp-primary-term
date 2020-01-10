@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
-if ( ! function_exists( 'get_the_primary_term' ) ){
+if ( ! function_exists( 'wppt_get_the_primary_term' ) ){
     /**
      * Retrieve a post's primary term as link with specified format.
      *
@@ -16,12 +16,12 @@ if ( ! function_exists( 'get_the_primary_term' ) ){
      * @param string $after Optional. After link.
      * @return string|false|WP_Error A link of term on success, false if there are no terms, WP_Error on failure.
      */
-    function get_the_primary_term( $taxonomy, $id=null, $before = '', $after = '' ){
+    function wppt_get_the_primary_term( $taxonomy, $id=null, $before = '', $after = '' ){
         if ( ! $post = get_post( $id ) ) {
             return false;
         }
 
-        $primary_term_object = new Primary_Term( $post->ID, $taxonomy );
+        $primary_term_object = new \WPPrimaryTerm\Primary_Term( $post->ID, $taxonomy );
         $primary_term_id = $primary_term_object->get_primary_term_id();
 
         if ( empty( $primary_term_id ) ) {
@@ -47,7 +47,7 @@ if ( ! function_exists( 'get_the_primary_term' ) ){
     }
 }
 
-if ( ! function_exists( 'get_primary_term' ) ){
+if ( ! function_exists( 'wppt_get_primary_term' ) ){
     /**
      * Retrieve a post's primary term.
      *
@@ -57,11 +57,11 @@ if ( ! function_exists( 'get_primary_term' ) ){
      * @param int $id int|WP_Post|null $post   Optional. Post ID or post object. Defaults to global $post.
      * @return string|false|WP_Error A object of term on success, false if there are no terms, WP_Error on failure.
      */
-    function get_primary_term( $taxonomy, $id = null ){
+    function wppt_get_primary_term( $taxonomy, $id = null ){
         if ( ! $post = get_post( $id ) ) {
             return false;
         }
-        $primary_term_object = new Primary_Term( $post->ID, $taxonomy );
+        $primary_term_object = new \WPPrimaryTerm\Primary_Term( $post->ID, $taxonomy );
         $term = $primary_term_object->get_primary_term();
         if ( empty( $term ) ) {
             return false;
@@ -82,7 +82,7 @@ if ( ! function_exists( 'get_primary_term' ) ){
     }
 }
 
-if ( ! function_exists( 'get_primary_term_id' ) ){
+if ( ! function_exists( 'wppt_get_primary_term_id' ) ){
     /**
      * Retrieve a post's primary term id.
      *
@@ -93,11 +93,12 @@ if ( ! function_exists( 'get_primary_term_id' ) ){
      * @param int $id int|WP_Post|null $post   Optional. Post ID or post object. Defaults to global $post.
      * @return int|false|WP_Error A id of term on success, false if there are no terms, WP_Error on failure.
      */
-    function get_primary_term_id( $taxonomy, $id = null ){
+    function wppt_get_primary_term_id( $taxonomy, $id = null ){
         if ( ! $post = get_post( $id ) ) {
             return false;
         }
-        $primary_term_object = new Primary_Term( $post->ID, $taxonomy );
+
+        $primary_term_object = new \WPPrimaryTerm\Primary_Term( $post->ID, $taxonomy );
         $primary_term_id = $primary_term_object->get_primary_term_id();
         if ( empty( $primary_term_id ) ) {
             return false;
@@ -115,5 +116,17 @@ if ( ! function_exists( 'get_primary_term_id' ) ){
          */
         $primary_term_id = apply_filters( "primary_term-{$taxonomy}-id", $primary_term_id );
         return (int) $primary_term_id;
+    }
+}
+
+if ( ! function_exists( 'wppt_get_primary_taxonomies' ) ){
+    /**
+     * Retrieve taxonomy array which are support primary term
+     *
+     * @since 1.0
+     * @return array Taxonomies array
+     */
+    function wppt_get_primary_taxonomies(){
+        return WPPrimaryTerm\Primary_Term_Public::get_instance()->get_primary_taxonomies();
     }
 }
