@@ -1,7 +1,7 @@
 <?php
 
 /*
-Plugin Name: Wp Primary Term
+Plugin Name: WP Primary Term
 Plugin URI: https://profiles.wordpress.org/dipeshkakadiya/
 Description: This plugin allow you to set primary term for posts & custom post type.
 Version: 1.0
