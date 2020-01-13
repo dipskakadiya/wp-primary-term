@@ -3,120 +3,115 @@ namespace WPPrimaryTerm;
 
 // If this file is called directly, abort.
 if ( ! defined( 'ABSPATH' ) ) {
-    die;
+	die;
 }
 
 if ( ! class_exists( 'Primary_Term' ) ) {
-    /**
-     * Class Primary_Term
-     * class for Primary Term
-     *
-     * @since 1.0
-     */
-    class Primary_Term
-    {
-
-        /**
-         * The taxonomy to which this term belongs.
-         *
-         * @since 1.0
-         */
-        protected $taxonomy_name;
-
-        /**
-         * The post ID to which this term belongs.
-         *
-         * @since 1-0
-         */
-        protected $post_id;
+	/**
+	 * Class Primary_Term
+	 * class for Primary Term
+	 *
+	 * @since 1.0
+	 */
+	class Primary_Term {
 
 
-        /**
-         * Primary_Term constructor.
-         * @param $post_id post id
-         * @param $taxonomy_name taxonomy slug
-         * @since 1.0
-         */
-        public function __construct($post_id, $taxonomy_name)
-        {
-            $this->post_id = $post_id;
-            $this->taxonomy_name = $taxonomy_name;
-        }
+		/**
+		 * The taxonomy to which this term belongs.
+		 *
+		 * @since 1.0
+		 */
+		protected $taxonomy_name;
 
-        /**
-         * Save primary term into post meta
-         *
-         * @param $termId
-         * @since 1.0
-         */
-        public function save_primary_term($termId)
-        {
-            $cache_key = 'primary_term_' . $this->taxonomy_name . '_' . $this->post_id;
+		/**
+		 * The post ID to which this term belongs.
+		 *
+		 * @since 1-0
+		 */
+		protected $post_id;
 
-            update_post_meta($this->post_id, '_primary_' . $this->taxonomy_name, $termId);
 
-            /**
-             * Delete cache on primary term update.
-             */
-            wp_cache_delete($cache_key, 'wp-primary-term');
-        }
+		/**
+		 * Primary_Term constructor.
+		 * @param $post_id post id
+		 * @param $taxonomy_name taxonomy slug
+		 * @since 1.0
+		 */
+		public function __construct( $post_id, $taxonomy_name ) {
+			$this->post_id       = $post_id;
+			$this->taxonomy_name = $taxonomy_name;
+		}
 
-        /**
-         * Get primary term id for post
-         *
-         * @return bool|int
-         * @since 1.0
-         */
-        public function get_primary_term_id()
-        {
+		/**
+		 * Save primary term into post meta
+		 *
+		 * @param $term_id
+		 * @since 1.0
+		 */
+		public function save_primary_term( $term_id ) {
+			$cache_key = 'primary_term_' . $this->taxonomy_name . '_' . $this->post_id;
 
-            $cache_key = 'primary_term_' . $this->taxonomy_name . '_' . $this->post_id;
+			update_post_meta( $this->post_id, '_primary_' . $this->taxonomy_name, $term_id );
 
-            $primary_term_id = wp_cache_get($cache_key, 'wp-primary-term', 'wp-primary-term');
+			/**
+			 * Delete cache on primary term update.
+			 */
+			wp_cache_delete( $cache_key, 'wp-primary-term' );
+		}
 
-            if (false === $primary_term_id) {
-                $primary_term_id = (int)get_post_meta($this->post_id, '_primary_' . $this->taxonomy_name, true);
+		/**
+		 * Get primary term id for post
+		 *
+		 * @return bool|int
+		 * @since 1.0
+		 */
+		public function get_primary_term_id() {
 
-                $post_terms_ids = $this->ger_post_terms_ids();
-                if (!in_array($primary_term_id, $post_terms_ids)) {
-                    $primary_term_id = false;
-                }
+			$cache_key = 'primary_term_' . $this->taxonomy_name . '_' . $this->post_id;
 
-                /**
-                 * Cache primary term id for a one day. Cache will be deleted on primary term data updated
-                 */
-                wp_cache_set($cache_key, $primary_term_id, 'wp-primary-term', DAY_IN_SECONDS);
-            }
-            return $primary_term_id;
-        }
+			$primary_term_id = wp_cache_get( $cache_key, 'wp-primary-term', 'wp-primary-term' );
 
-        /**
-         * Get primary term object for post
-         * @return array|WP_Error|WP_Term|null
-         * @since 1.0
-         */
-        public function get_primary_term()
-        {
-            $primary_term = false;
-            $primary_term_id = $this->get_primary_term_id();
-            if (!empty($primary_term_id)) {
-                $primary_term = get_term($primary_term_id, $this->taxonomy_name);
-            }
-            return $primary_term;
-        }
+			if ( false === $primary_term_id ) {
+				$primary_term_id = (int) get_post_meta( $this->post_id, '_primary_' . $this->taxonomy_name, true );
 
-        /**
-         * Get term ids for post
-         * @return array
-         * @since 1.0
-         */
-        private function ger_post_terms_ids()
-        {
-            $terms = get_the_terms($this->post_id, $this->taxonomy_name);
-            if (!is_array($terms)) {
-                $terms = array();
-            }
-            return wp_list_pluck($terms, 'term_id');
-        }
-    }
+				$post_terms_ids = $this->ger_post_terms_ids();
+				if ( ! in_array( $primary_term_id, $post_terms_ids, true ) ) {
+					$primary_term_id = false;
+				}
+
+				/**
+				 * Cache primary term id for a one day. Cache will be deleted on primary term data updated
+				 */
+				wp_cache_set( $cache_key, $primary_term_id, 'wp-primary-term', DAY_IN_SECONDS );
+			}
+			return $primary_term_id;
+		}
+
+		/**
+		 * Get primary term object for post
+		 * @return array|WP_Error|WP_Term|null
+		 * @since 1.0
+		 */
+		public function get_primary_term() {
+			$primary_term    = false;
+			$primary_term_id = $this->get_primary_term_id();
+			if ( ! empty( $primary_term_id ) ) {
+				$primary_term = get_term( $primary_term_id, $this->taxonomy_name );
+			}
+			return $primary_term;
+		}
+
+		/**
+		 * Get term ids for post
+		 * @return array
+		 * @since 1.0
+		 */
+		private function ger_post_terms_ids() {
+			$terms = get_the_terms( $this->post_id, $this->taxonomy_name );
+			if ( ! is_array( $terms ) ) {
+				$terms = array();
+			}
+			return wp_list_pluck( $terms, 'term_id' );
+		}
+	}
 }

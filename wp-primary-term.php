@@ -15,25 +15,25 @@ Domain Path: /languages
 
 // If this file is called directly, abort.
 if ( ! defined( 'ABSPATH' ) ) {
-    die;
+	die;
 }
 
 if ( ! defined( 'WPPT_PATH' ) ) {
-    /**
-     * Path to the plugin folder.
-     *
-     * @since 1.0
-     */
-    define( 'WPPT_PATH', trailingslashit( plugin_dir_path( __FILE__ ) ) );
+	/**
+	 * Path to the plugin folder.
+	 *
+	 * @since 1.0
+	 */
+	define( 'WPPT_PATH', trailingslashit( plugin_dir_path( __FILE__ ) ) );
 }
 
 if ( ! defined( 'WPPT_URL' ) ) {
-    /**
-     * URL to the plugin folder.
-     *
-     * @since 1.0
-     */
-    define( 'WPPT_URL', trailingslashit( plugins_url( '', __FILE__ ) ) );
+	/**
+	 * URL to the plugin folder.
+	 *
+	 * @since 1.0
+	 */
+	define( 'WPPT_URL', trailingslashit( plugins_url( '', __FILE__ ) ) );
 }
 
 
@@ -43,5 +43,5 @@ require_once WPPT_PATH . 'includes/class-primary-term-public.php';
  * Load the admin class if its the admin dashboard
  */
 if ( is_admin() ) {
-    require_once WPPT_PATH . 'admin/class-primary-term-admin.php';
+	require_once WPPT_PATH . 'admin/class-primary-term-admin.php';
 }
